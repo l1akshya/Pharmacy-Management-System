@@ -1,0 +1,5 @@
+Ibugesic ,cipla,a123,1,100
+KOFAID ,Homeopath,ginger,3,200
+XEROCIN ,nomato,12Gz,9,150
+CROCIN ,nomato,12Gh,12,85
+PARACETAMOL ,para,123s,3,150
