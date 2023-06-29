@@ -8,15 +8,30 @@ import csv
 import sys
 import text_extraction
 import bill_2
-from bill_2 import generate_bill
+from bill_2 import Bill
 import bill
 from bill import pdf_creater
 from text_extraction import image_to_text
-f=open("medicinerepo.csv",'r')
-main_data=f.read()
-main_data=main_data.split('\n')
-main_data=(list(filter(None,main_data)))
 
+class button:
+    def __init__(self,normal_image,hover_image,x,y,command,frame):
+        self.normal_image=tk.PhotoImage(file=normal_image)
+        self.hover_image=tk.PhotoImage(file=hover_image)
+        self.x=x 
+        self.y=y 
+        self.command=command
+        self.frame=frame
+        button = tk.Button(frame, image=normal_image, borderwidth=0, highlightthickness=0,command=self.command)
+        button.place(x=self.x,y=self.y)
+    def on_leave_button(event,self):
+        button.config(image=self.normal_image)
+    def on_enter_button(event,self):
+        button.config(image=self.normal_image)
+    def button_change(self,on_enter_button,on_leave_button):
+        button.bind("<Enter>", on_enter_button(self))
+        button.bind("<Leave>", on_leave_button(self))
+    
+   
 def delete_csv_contents_except_first_line(file_path):
     # Read the first line of the CSV file
     with open(file_path, 'r', newline='') as file:
@@ -68,7 +83,8 @@ def new_page(pill):
         frame.destroy()
         search_medicine_page(pill)
     def commander_bill():
-        generate_bill("bill_temp.csv","bill.txt")
+        bill = Bill("bill_temp.csv","bill.txt")
+        bill.generate_bill()
         messagebox.showinfo("Pharmacy Management System","Bill Generated Successfully")
         pdf_creater()
     button_remove_medicine = tk.Button(frame, image=remove_medicine, borderwidth=0, highlightthickness=0,command=commander_remove)
@@ -460,7 +476,7 @@ def login_page():
     normal_image2 = tk.PhotoImage(file="button_normal_1.png")
     hover_image2 = tk.PhotoImage(file="button_hover_1.png")
 
-    def oni():
+    def show_password():
         if password_input['show'] == '*':
             password_input.config(show="")
         else:
@@ -477,7 +493,7 @@ def login_page():
         button.invoke()
     password_input.bind("<Return>", on_enter_press)
 
-    button2 = tk.Button(root, image=normal_image2, borderwidth=0, highlightthickness=0,command=oni)
+    button2 = tk.Button(root, image=normal_image2, borderwidth=0, highlightthickness=0,command=show_password)
     button2.place(x=876+20,y=328-20-20+5+1)
 
     button2.bind("<Enter>", on_enter_button2)
